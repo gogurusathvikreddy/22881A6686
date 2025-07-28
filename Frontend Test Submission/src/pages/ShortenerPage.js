@@ -5,10 +5,8 @@ import {
   TextField, 
   Button, 
   Typography, 
-  Container, 
   Card, 
   CardContent, 
-  Grid, 
   Alert,
   AppBar,
   Toolbar,
@@ -191,8 +189,8 @@ const ShortenerPage = () => {
   };
 
   return (
-    <Container maxWidth="lg">
-      <AppBar position="static" sx={{ mb: 4 }}>
+    <Box sx={{ width: '100vw', minHeight: '100vh', margin: 0, padding: 0 }}>
+      <AppBar position="static" sx={{ mb: 0 }}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             URL Shortener
@@ -203,25 +201,26 @@ const ShortenerPage = () => {
         </Toolbar>
       </AppBar>
 
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom align="center">
-          Shorten Your URLs
-        </Typography>
-        <Typography variant="subtitle1" align="center" color="text.secondary" sx={{ mb: 4 }}>
-          Shorten up to 5 URLs simultaneously with custom expiry times
-        </Typography>
+      <Box sx={{ width: '100%', px: 2, py: 4 }}>
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h4" component="h1" gutterBottom align="center">
+            Shorten Your URLs
+          </Typography>
+          <Typography variant="subtitle1" align="center" color="text.secondary" sx={{ mb: 4 }}>
+            Shorten up to 5 URLs simultaneously with custom expiry times
+          </Typography>
+        </Box>
 
-        <Grid container spacing={3}>
+        <Box sx={{ width: '100%' }}>
           {urls.map((urlData, index) => (
-            <Grid item xs={12} key={index}>
-              <Card variant="outlined">
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    URL #{index + 1}
-                  </Typography>
-                  
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
+            <Box key={index} sx={{ width: '100%', mb: 3 }}>
+              <Card variant="outlined" sx={{ width: '100%', mx: 0 }}>
+                <CardContent sx={{ p: 3 }}>
+                    <Typography variant="h6" gutterBottom>
+                      URL #{index + 1}
+                    </Typography>
+                    
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                       <TextField
                         fullWidth
                         label="Enter Long URL"
@@ -230,34 +229,34 @@ const ShortenerPage = () => {
                         onChange={(e) => updateUrl(index, 'longUrl', e.target.value)}
                         placeholder="https://example.com/very/long/url"
                         error={!!urlData.error && urlData.error.includes('URL')}
+                        sx={{ '& .MuiInputBase-root': { fontSize: '1.1rem' } }}
                       />
-                    </Grid>
-                    
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        label="Custom Shortcode (Optional)"
-                        variant="outlined"
-                        value={urlData.customShortcode}
-                        onChange={(e) => updateUrl(index, 'customShortcode', e.target.value)}
-                        placeholder="mycode123"
-                        helperText="Leave empty for auto-generation"
-                      />
-                    </Grid>
-                    
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        label="Validity Period (Minutes)"
-                        type="number"
-                        variant="outlined"
-                        value={urlData.validityMinutes}
-                        onChange={(e) => updateUrl(index, 'validityMinutes', parseInt(e.target.value) || 30)}
-                        inputProps={{ min: 1, max: 10080 }} // Max 1 week
-                        helperText="Default: 30 minutes"
-                      />
-                    </Grid>
-                  </Grid>
+                      
+                      <Box sx={{ display: 'flex', gap: 2, flexDirection: { xs: 'column', md: 'row' } }}>
+                        <TextField
+                          fullWidth
+                          label="Custom Shortcode (Optional)"
+                          variant="outlined"
+                          value={urlData.customShortcode}
+                          onChange={(e) => updateUrl(index, 'customShortcode', e.target.value)}
+                          placeholder="mycode123"
+                          helperText="Leave empty for auto-generation"
+                          sx={{ '& .MuiInputBase-root': { fontSize: '1.1rem' } }}
+                        />
+                        
+                        <TextField
+                          fullWidth
+                          label="Validity Period (Minutes)"
+                          type="number"
+                          variant="outlined"
+                          value={urlData.validityMinutes}
+                          onChange={(e) => updateUrl(index, 'validityMinutes', parseInt(e.target.value) || 30)}
+                          inputProps={{ min: 1, max: 10080 }} // Max 1 week
+                          helperText="Default: 30 minutes"
+                          sx={{ '& .MuiInputBase-root': { fontSize: '1.1rem' } }}
+                        />
+                      </Box>
+                    </Box>
 
                   {urlData.error && (
                     <Alert severity="error" sx={{ mt: 2 }}>
@@ -305,9 +304,9 @@ const ShortenerPage = () => {
                   </Box>
                 </CardContent>
               </Card>
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
 
         <Divider sx={{ my: 4 }} />
 
@@ -340,7 +339,7 @@ const ShortenerPage = () => {
           </Button>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 
